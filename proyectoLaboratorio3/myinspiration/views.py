@@ -1,6 +1,12 @@
-
-from django.shortcuts import render
 from .forms import SignUpForm
+from django.shortcuts import render
+
+from django.contrib.auth.views import LoginView
+
+class SignInView(LoginView):
+    template_name = 'iniciar_sesion.html'
+
+
 
 def home_view(request):
     return render(request, 'home.html')
@@ -19,3 +25,6 @@ def signup_view(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+
+

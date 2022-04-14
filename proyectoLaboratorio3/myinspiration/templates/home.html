@@ -1,1 +1,40 @@
-home
+<!doctype html>
+{% load static %}
+<html lang="en"><head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
+{% block title %}
+{% endblock title %}
+    </head>
+    <body>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <!-- Bootstrap -->
+        <script src ="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src ="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!--Navbar Starts Here-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="{% url 'home' %}">My Inspiration</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+
+                </ul>
+
+                <a class="btn btn-outline-secondary" href="{% url 'iniciar_sesion' %}">Login</a>
+                <a class="btn btn-primary ml-2 mr-2" href="{% url 'signup' %}">SignUp</a>
+
+                <form class="form-inline my-2 my-lg-0" action="#" method='GET'>
+                    <input class="form-control mr-sm-2" type="search" name='q' aria-label="Search" placeholder='Search' value={{request.GET.q}} >
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+{% block content %}
+{% endblock content%}
+        </body>
+    </html>
