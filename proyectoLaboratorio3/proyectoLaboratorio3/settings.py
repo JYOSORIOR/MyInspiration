@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'myinspiration.apps.MyinspirationConfig',
+    'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,7 +123,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/inicia-sesion/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'feed'
 
 
 # Default primary key field type

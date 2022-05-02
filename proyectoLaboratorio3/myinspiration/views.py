@@ -1,22 +1,21 @@
+from django.shortcuts import render, redirect
+from .models import *
 from .forms import SignUpForm
-from django.shortcuts import render
-
-from django.contrib.auth.views import LoginView
-
-class SignInView(LoginView):
-    template_name = 'iniciar_sesion.html'
 
 
+def feed(request):
+    posts = Post.objects.all()
 
-def home_view(request):
-    return render(request, 'home.html')
+    context = {'post': posts}
+    return render(request, 'social/feed.html', context)
 
-def signup_view(request):
-    if request.method  == 'POST':
+def register(request):
+    if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
+            user.profile.username = form.cleaned_data.get('username')
             user.profile.first_name = form.cleaned_data.get('first_name')
             user.profile.last_name = form.cleaned_data.get('last_name')
             user.profile.email = form.cleaned_data.get('email')
@@ -24,7 +23,13 @@ def signup_view(request):
             user.save()
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    context = { 'form' : form}
+    return render(request,'social/register.html', context)
+
+
+
+def profile(request):
+    return render(request,'social/profile.html')
 
 
 

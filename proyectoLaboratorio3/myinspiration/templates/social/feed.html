@@ -1,0 +1,18 @@
+{% extends 'social/layout.html' %}
+
+{% block content %}
+
+
+<article>
+    <div class="container-article">
+        <img src="../../static/batman.png">
+        <div>
+            <h2 class="username"><a href="{% url 'profile' %}">@JDJ</a></h2>
+            <i class="clock"></i>
+            <time data-time="#">5 seconds</time>
+            <div class="post">Hola, es mi primer post</div>
+        </div>
+    </div>
+</article>
+
+{% endblock %}
