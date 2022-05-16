@@ -54,7 +54,7 @@ ROOT_URLCONF = 'proyectoLaboratorio3.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,6 +63,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+                'libraries' : {
+                'staticfiles': 'django.templatetags.static', }
         },
     },
 ]
@@ -125,6 +127,7 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/inicia-sesion/'
 LOGIN_REDIRECT_URL = 'feed'
 
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

@@ -15,9 +15,9 @@ def register(request):
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
-            user.profile.username = form.cleaned_data.get('username')
-            user.profile.first_name = form.cleaned_data.get('first_name')
-            user.profile.last_name = form.cleaned_data.get('last_name')
+            user.profile.username = form.cleaned_data.get('nombre_usuario')
+            user.profile.first_name = form.cleaned_data.get('nombre')
+            user.profile.last_name = form.cleaned_data.get('apellido')
             user.profile.email = form.cleaned_data.get('email')
             user.is_active = False
             user.save()

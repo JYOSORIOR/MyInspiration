@@ -6,9 +6,9 @@ from django.utils import timezone
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    username = models.CharField(max_length=100, blank=True)
-    first_name = models.CharField(max_length=100, blank=True)
-    last_name = models.CharField(max_length=100, blank=True)
+    nombre_usuario = models.CharField(max_length=100, blank=True)
+    nombre = models.CharField(max_length=100, blank=True)
+    apellido = models.CharField(max_length=100, blank=True)
     email = models.EmailField(max_length=150)
 
     def __str__(self):
@@ -24,8 +24,10 @@ def update_profile_signal(sender, instance, created, **kwargs):
 def guardar_usuario_perfil(sender, instance, **kwargs):
     instance.profile.save()
 
+
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    titulo = models.CharField(max_length=100)
     timestamp = models.DateTimeField(default=timezone.now)
     content = models.TextField()
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 

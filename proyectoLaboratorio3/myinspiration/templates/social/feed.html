@@ -1,11 +1,10 @@
 {% extends 'social/layout.html' %}
-
+{% load staticfiles %}
 {% block content %}
-
 
 <article>
     <div class="container-article">
-        <img src="../../static/batman.png">
+        <img src="{% static 'icono.png' %}">
         <div>
             <h2 class="username"><a href="{% url 'profile' %}">@JDJ</a></h2>
             <i class="clock"></i>
