@@ -76,9 +76,9 @@ WSGI_APPLICATION = 'proyectoLaboratorio3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'proyectoLab',
+        'NAME': 'myInspirationDB',
         'USER': 'postgres',
-        'PASSWORD': '1927',
+        'PASSWORD': 'usb123',
         'HOST':'localhost',
         'PORT': '5432',
     }

@@ -32,4 +32,13 @@ def profile(request):
     return render(request,'social/profile.html')
 
 
+def inspirationCreation(request):
+    form = InspirationCreation(request.POST)
+    photo_form = forms.PhotoForm()
+    if request.method == 'POST':
 
+    context = {
+        'blog_form': blog_form,
+        'photo_form': photo_form,
+    }
+    return render(request, 'blog/create_blog_post.html', context=context)

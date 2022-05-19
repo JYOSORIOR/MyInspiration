@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from . import models
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(max_length=100)
@@ -19,3 +19,8 @@ class SignUpForm(UserCreationForm):
             'password1',
             'password2',
         )
+
+class InspirationCreation(forms.ModelForm):
+    class Meta:
+        model = models.Inspiration
+        fields = ['title', 'content']
