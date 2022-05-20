@@ -7,6 +7,7 @@ def feed(request):
     print(request.user)
     posts = Post.objects.all()
 
+
     context = {'post': posts}
     return render(request, 'social/feed.html', context)
 
@@ -42,7 +43,7 @@ def profile(request):
 def login2(request):
     if request.POST:
         form = LoginForm(request.POST)
-        username = request.POST['username']
+        username = request.POST['usernfame']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         print(username, password, user)

@@ -19,6 +19,7 @@ class SignUpForm(UserCreationForm):
             'password2',
         )
 
+
 class LoginForm(ModelForm):
 
     class Meta:

@@ -14,6 +14,8 @@ class Profile(models.Model):
     def __str__(self):
         return f'Perfil de{self.user.username}'
 
+
+
 @receiver(post_save, sender=User)
 def update_profile_signal(sender, instance, created, **kwargs):
     if created:
