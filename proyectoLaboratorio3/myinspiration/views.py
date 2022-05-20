@@ -54,13 +54,4 @@ def login2(request):
         context = {'form': form}
         return render(request, 'social/login.html', context)
 
-def inspirationCreation(request):
-    form = InspirationCreation(request.POST)
-    photo_form = forms.PhotoForm()
-    if request.method == 'POST':
 
-        context = {
-        'blog_form': blog_form,
-        'photo_form': photo_form,
-        }
-        return render(request, 'blog/create_blog_post.html', context=context)
