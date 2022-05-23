@@ -292,3 +292,20 @@ img.profile{
   }
 
 }
+
+button#favorite {
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  background: #209CE3;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  opacity: .8;
+  transition: .35s linear;
+}
+
+activity {
+background: #000000;
+align: right
+}

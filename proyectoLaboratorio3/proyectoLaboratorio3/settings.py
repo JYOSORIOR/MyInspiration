@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'proyectoLaboratorio3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'proyectoLab',
+        'NAME': 'myInspirationDB',
         'USER': 'postgres',
-        'PASSWORD': '1927',
+        'PASSWORD': 'usb123',
         'HOST':'localhost',
         'PORT': '5432',
     }
@@ -134,3 +134,4 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

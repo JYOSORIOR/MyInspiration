@@ -5,8 +5,18 @@
 <!-- Profile -->
 <div class="profile">
 	<img src="{% static 'icono.png' %}">
-	<h2>@JDJ</h2>
-	<button><a class="follow-button" href="#">Follow</a></button>
+	<h2>@{{ user.username }}</h2>
+
+	{% if request.user.is_authenticated %}
+		{% if user.username != request.user.username %}
+				{% if user not in request.user.profile.siguiendo %}
+				<button><a class="follow-button" href="{% url 'seguir' user %}">Follow</a></button>
+				{% else %}
+				<button><a class="follow-button" href="{% url 'dejardeSeguir' user %}">Unfollow</a></button>
+				{% endif %}
+		{% endif %}
+	{% endif %}
+
 </div>
 
 <!-- Follow items -->
@@ -16,16 +26,11 @@
 		<p>0</p>
 	</div>
 	<div>
-		<h5>Followers</h5>
-		<p>0</p>
-
-	</div>
-	<div>
 		<h5>Following</h5>
 		<p>0</p>
 	</div>
-</div>
 
+</div>
 
 <!-- block super -->
 {% endblock %}
