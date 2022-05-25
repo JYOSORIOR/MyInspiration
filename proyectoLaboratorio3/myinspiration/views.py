@@ -1,14 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, PostForm
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth.models import User
 
 def feed(request):
     print(request.user)
     posts = Post.objects.all()
 
-
-    context = {'post': posts}
+    context = { 'posts': posts}
     return render(request, 'social/feed.html', context)
 
 def register(request):
@@ -19,11 +20,10 @@ def register(request):
             print("post")
             user = form.save()
             print(user)
-            user.refresh_from_db()
-            user.profile.username = form.cleaned_data.get('nombre_usuario')
-            user.profile.first_name = form.cleaned_data.get('nombre')
-            user.profile.last_name = form.cleaned_data.get('apellido')
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
             user.profile.email = form.cleaned_data.get('email')
+            messages.success(request, f'Usuario creado')
             user.is_active = True
             user.save()
             print(user)
@@ -35,24 +35,61 @@ def register(request):
     context = { 'form' : form}
     return render(request,'social/register.html', context)
 
+def profile(request, username=None):
+    current_user = request.user
+    if username and username != current_user.username:
+        user = User.objects.get(username=username)
+        posts = user.posts.all()
+    else:
+        posts = current_user.posts.all()
+        user = current_user
+    return render(request, 'social/profile.html', {'user': user, 'posts': posts})
 
+def post(request):
+    current_user= get_object_or_404(User, pk=request.user.pk)
+    if request.POST:
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post=form.save(commit=False)
+            post.user = current_user
+            post.save()
+            messages.success(request, 'Post Enviado')
+            return redirect('feed')
+    else:
+        form = PostForm
+    return render(request, 'social/post.html', {'form': form })
 
-def profile(request):
-    return render(request,'social/profile.html')
 
 def login2(request):
     if request.POST:
         form = LoginForm(request.POST)
-        username = request.POST['usernfame']
+        username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         print(username, password, user)
         login(request,user)
-        print("usuairo", user)
+        print("usuario", user)
         return redirect('feed')
     else:
         form = LoginForm(request.POST)
         context = {'form': form}
         return render(request, 'social/login.html', context)
 
+def seguir(request, username):
+    current_user = request.user
+    to_user = User.objects.get(username=username)
+    to_user_id = to_user
+    segu = Seguidos(from_user = current_user, to_user = to_user_id)
+    segu.save()
+    messages.success(request, f'sigues a {username}')
+    return redirect('home')
+
+def dejardeSeguir(request, username):
+    current_user = request.user
+    to_user = User.objects.get(username=username)
+    to_user_id = to_user
+    segu = Seguidos.objects.filter(from_user = current_user.id, to_user = to_user_id).get()
+    segu.delete()
+    messages.success(request, f'ya no sigues a {username}')
+    return redirect('home')
 

@@ -1,31 +1,20 @@
-{% extends 'social/layout.html' %}
+{% extends 'social/feed.html' %}
 {% load staticfiles %}
 {% block content %}
 
 <!-- Profile -->
 <div class="profile">
 	<img src="{% static 'icono.png' %}">
-	<h2>@JDJ</h2>
-	<button><a class="follow-button" href="#">Follow</a></button>
+	<h2>@{{ user.username }}</h2>
 </div>
 
-<!-- Follow items -->
 <div class="follow">
 	<div>
 		<h5>Post</h5>
-		<p>0</p>
-	</div>
-	<div>
-		<h5>Followers</h5>
-		<p>0</p>
-
-	</div>
-	<div>
-		<h5>Following</h5>
-		<p>0</p>
+		<p>{{ user.posts.count }}</p>
 	</div>
 </div>
 
 
-<!-- block super -->
+{{ block.super }}
 {% endblock %}

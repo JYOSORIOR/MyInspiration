@@ -1,17 +1,25 @@
 {% extends 'social/layout.html' %}
 {% load staticfiles %}
+{% load humanize %}
 {% block content %}
-{{request.user}}
+
+{% for post in posts %}
 <article>
     <div class="container-article">
         <img src="{% static 'icono.png' %}">
         <div>
-            <h2 class="username"><a href="{% url 'profile' %}">@JDJ</a></h2>
+            <h2 class="username"><a href="{% url 'profile' post.user.username %}">@{{ post.user.username}}</a></h2>
             <i class="clock"></i>
-            <time data-time="#">5 seconds</time>
-            <div class="post">Hola, es mi primer post</div>
+            <time data-time="#">{{ post.timestamp|naturaltime }}</time>
+            <div class="post">{{ post.content }}</div>
+            <div class ="activity">
+                <button type = "favorite" id = "favorite">FAVORITO</button>
+                <button type = "report" id = "report">REPORTAR</button>
+            </div>
         </div>
     </div>
 </article>
+
+{% endfor %}
 
 {% endblock %}
