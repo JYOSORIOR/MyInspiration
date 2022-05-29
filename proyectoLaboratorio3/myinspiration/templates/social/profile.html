@@ -8,13 +8,21 @@
 	<h2>@{{ user.username }}</h2>
 
 	{% if request.user.is_authenticated %}
+
+
 		{% if user.username != request.user.username %}
-				{% if user not in request.user.profile.siguiendo %}
-				<button><a class="follow-button" href="{% url 'seguir' user %}">Follow</a></button>
+
+
+				{% if user not in request.user.profile.following %}
+				<button><a class="follow-button" href="{% url 'follow' user %}">Follow</a></button>
 				{% else %}
-				<button><a class="follow-button" href="{% url 'dejardeSeguir' user %}">Unfollow</a></button>
+				<button><a class="follow-button" href="{% url 'unfollow' user %}">Unfollow</a></button>
 				{% endif %}
+
+
 		{% endif %}
+
+
 	{% endif %}
 
 </div>
@@ -27,7 +35,7 @@
 	</div>
 	<div>
 		<h5>Following</h5>
-		<p>0</p>
+		<p> {{ user.profile.following.count }}  </p>
 	</div>
 
 </div>

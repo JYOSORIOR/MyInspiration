@@ -12,7 +12,9 @@ urlpatterns = [
     #path('login/', LoginView.as_view(template_name='social/login.html'), name='login'),
     path('login/', views.login2, name='login'),
     path('logout/', LogoutView.as_view(template_name='social/logout.html'), name='logout'),
-    path('follow/<str:username>/' , views.Seguidos, name='follow' ),
-    path('unfollow/<str:username>/', views.dejardeSeguir, name='unfollow')
+
+
+    path('follow/<str:username>/' , views.follow, name='follow' ),
+    path('unfollow/<str:username>/', views.unfollow, name='unfollow')
 ]
 

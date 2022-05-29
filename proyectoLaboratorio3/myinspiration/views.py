@@ -3,7 +3,7 @@ from .models import *
 from .forms import SignUpForm, LoginForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-
+from django.contrib.auth.decorators import login_required
 def feed(request):
     print(request.user)
     posts = Post.objects.all()
@@ -19,11 +19,10 @@ def register(request):
             print("post")
             user = form.save()
             print(user)
-            user.refresh_from_db()
-            user.profile.username = form.cleaned_data.get('nombre_usuario')
-            user.profile.first_name = form.cleaned_data.get('nombre')
-            user.profile.last_name = form.cleaned_data.get('apellido')
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
             user.profile.email = form.cleaned_data.get('email')
+            messages.success(request, f'Usuario creado')
             user.is_active = True
             user.save()
             print(user)
@@ -36,16 +35,15 @@ def register(request):
     return render(request,'social/register.html', context)
 
 
-
 def profile(request, username=None):
-	current_user = request.user
-	if username and username != current_user.username:
-		user = User.objects.get(username=username)
-		posts = user.posts.all()
-	else:
-		posts = current_user.posts.all()
-		user = current_user
-	return render(request, 'social/profile.html', {'user':user, 'posts':posts})
+    current_user = request.user
+    if username and username != current_user.username:
+        user = User.objects.get(username=username)
+        posts = user.posts.all()
+    else:
+        posts = current_user.posts.all()
+        user = current_user
+    return render(request, 'social/profile.html', {'user': user, 'posts': posts})
 
 def login2(request):
     if request.POST:
@@ -55,27 +53,27 @@ def login2(request):
         user = authenticate(username=username, password=password)
         print(username, password, user)
         login(request,user)
-        print("usuairo", user)
+        print("usuario", user)
         return redirect('feed')
     else:
         form = LoginForm(request.POST)
         context = {'form': form}
         return render(request, 'social/login.html', context)
 
-def seguir(request, username):
+def follow(request, username):
     current_user = request.user
     to_user = User.objects.get(username=username)
     to_user_id = to_user
-    segu = Seguidos(from_user = current_user, to_user = to_user_id)
-    segu.save()
+    rel = Relationship(from_user = current_user, to_user = to_user_id)
+    rel.save()
     messages.success(request, f'sigues a {username}')
-    return redirect('home')
+    return redirect('feed')
 
-def dejardeSeguir(request, username):
+def unfollow(request, username):
     current_user = request.user
     to_user = User.objects.get(username=username)
     to_user_id = to_user
-    segu = Seguidos.objects.filter(from_user = current_user.id, to_user = to_user_id).get()
-    segu.delete()
+    rel = Relationship.objects.filter(from_user = current_user.id, to_user = to_user_id).get()
+    rel.delete()
     messages.success(request, f'ya no sigues a {username}')
-    return redirect('home')
+    return redirect('feed')
