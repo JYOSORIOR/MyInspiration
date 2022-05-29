@@ -4,13 +4,18 @@ from .forms import SignUpForm, LoginForm, PostForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.shortcuts import render
+from django.db.models import Q
+
 
 def feed(request):
-    print(request.user)
+    queryset = request.GET.get("buscar")
     posts = Post.objects.all()
-
-    context = { 'posts': posts}
-    return render(request, 'social/feed.html', context)
+    if queryset:
+        posts = Post.objects.filter(
+            Q(content__icontains = queryset)
+        )
+    return render(request, 'social/feed.html', { 'posts': posts})
 
 def register(request):
     if request.method == 'POST':
@@ -60,6 +65,7 @@ def post(request):
     return render(request, 'social/post.html', {'form': form })
 
 
+
 def login2(request):
     if request.POST:
         form = LoginForm(request.POST)
@@ -75,21 +81,27 @@ def login2(request):
         context = {'form': form}
         return render(request, 'social/login.html', context)
 
-def seguir(request, username):
+def follow(request, username):
     current_user = request.user
     to_user = User.objects.get(username=username)
     to_user_id = to_user
-    segu = Seguidos(from_user = current_user, to_user = to_user_id)
-    segu.save()
+    rel = Relationship(from_user = current_user, to_user = to_user_id)
+    rel.save()
     messages.success(request, f'sigues a {username}')
-    return redirect('home')
+    return redirect('feed')
 
-def dejardeSeguir(request, username):
+def unfollow(request, username):
     current_user = request.user
     to_user = User.objects.get(username=username)
     to_user_id = to_user
-    segu = Seguidos.objects.filter(from_user = current_user.id, to_user = to_user_id).get()
-    segu.delete()
+    rel = Relationship.objects.filter(from_user = current_user.id, to_user = to_user_id).get()
+    rel.delete()
     messages.success(request, f'ya no sigues a {username}')
-    return redirect('home')
+    return redirect('feed')
+
+def delete(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.delete()
+    return redirect('feed')
+
 
