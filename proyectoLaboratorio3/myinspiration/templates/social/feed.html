@@ -1,14 +1,13 @@
 {% extends 'social/layout.html' %}
 {% load staticfiles %}
 {% block content %}
-{{request.user}}
 
 {% for post in posts %}
 
 <article>
 
     <div class="container-article">
-        <img src="{% static 'icono.png' %}">
+        <img src="{% static 'logouser.png' %}">
         <div>
             <h2 class="username"><a href="{% url 'profile' post.user.username %}">@{{ post.user.username }}</a></h2>
             <i class="clock"></i>
@@ -75,7 +74,7 @@
                   <button class="dropbtn">Opciones</button>
                   <div class="dropdown-content">
                     <a href="{% url 'delete' post.id %}">DELETE</a>
-                    <a href="{% url 'delete' post.id %}">EDIT</a>
+                    <a href="{% url 'edit_post' post.id %}">EDIT</a>
                   </div>
                 </div>
 

@@ -64,6 +64,20 @@ def post(request):
         form = PostForm
     return render(request, 'social/post.html', {'form': form })
 
+def edit_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    form = PostForm(instance=post)
+
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+             form.save()
+             return redirect('feed')
+
+    return render(request, 'social/post.html', {'form': form})
+
+
+
 
 
 def login2(request):

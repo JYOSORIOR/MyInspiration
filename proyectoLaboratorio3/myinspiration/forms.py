@@ -11,15 +11,16 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = (
+        fields = [
             'username',
             'first_name',
             'last_name',
             'email',
             'password1',
             'password2',
-        )
+        ]
 
+        help_texts = {k: "" for k in fields}
 
 class LoginForm(ModelForm):
 
@@ -29,6 +30,7 @@ class LoginForm(ModelForm):
             'username',
             'password'
         )
+        help_texts = {k:"" for k in fields }
 
 class PostForm(forms.ModelForm):
     content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':2, 'placeholder': "¿Qué piensas"}), required=True)
@@ -36,3 +38,4 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['content']
+
